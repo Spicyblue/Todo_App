@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">
+                 <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+  {% if lists %}
+    <ul id="lists">
+        {% for lst in lists %}
+        <li>
+            <a>
+            <h2>{{ lst['title'] }}</h2>
+            <p>{{ lst['todos'] | length }}</p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+  {% else %}
+    <p id="no_list">You don't have any todo lists. Why not create one?</p>
+  {% endif %}
+{% endblock %}
+
+{% block header_links %}
+  <a class="add" href="/lists/new">New List</a>
+{% endblock %}
