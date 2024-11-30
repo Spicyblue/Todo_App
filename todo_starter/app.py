@@ -6,6 +6,7 @@ from todos.utils import (error_for_list_title, find_list_by_id, error_for_todo,
                          find_todo_by_id, delete_todo_by_id, mark_all_completed,
                          todos_remaining, is_list_completed, sort_items, is_todo_completed)
 from werkzeug.exceptions import NotFound # type: ignore
+import os
 
 app = Flask(__name__)
 
@@ -170,4 +171,7 @@ def update_list(lst, list_id):
     return redirect(url_for('show_list', list_id=list_id))
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.run(debug=False)
+    else:
+        app.run(debug=True, port=5003)
