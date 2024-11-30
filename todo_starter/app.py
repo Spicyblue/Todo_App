@@ -103,28 +103,12 @@ def get_lists():
                            lists=lists,
                            todos_remaining=todos_remaining)
 
-# @app.route("/lists", methods = ["GET"])
-# def get_lists():
-#     lists = sort_lists(session['lists'])
-#     return render_template('lists.html',
-#                             lists=session['lists'],
-#                             todos_remaining = todos_remaining,
-#                             lists=lists)
-
 # Getting available todo list else 404 error
 @app.route("/lists/<list_id>")
 @require_list
 def show_list(lst, **kwargs):
     lst['todos'] = sort_items(lst['todos'], is_todo_completed)
     return render_template('list.html', lst=lst)
-
-# def show_list(list_id):
-#     lst = find_list_by_id(list_id, session['lists'])
-#     if not lst:
-#         raise NotFound(description="List not found")
-
-#     lst['todos'] = sort_items(lst['todos'], is_todo_completed)
-#     return render_template('list.html', lst=lst)
 
 # Toggle completion status of a todo
 @app.route("/lists/<list_id>/todos/<todo_id>/toggle", methods=["POST"])
